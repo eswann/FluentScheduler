@@ -221,7 +221,7 @@ namespace FluentScheduler
 
 			var start = DateTime.Now;
 			RaiseTaskStart(schedule, start);
-			var mainTask = Task.Factory.StartNew(() =>
+			var mainTask = Task.Factory.StartNew(async() =>
 			{
 				var stopwatch = new Stopwatch();
 				try
@@ -230,7 +230,7 @@ namespace FluentScheduler
 					foreach (var action in schedule.Tasks)
 					{
 					    var subTask = Task.Run(action);
-					    subTask.Wait();
+					    await subTask;
 					}
 				}
 				finally
