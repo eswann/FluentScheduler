@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentScheduler.Model;
 using Moq;
 using NUnit.Framework;
@@ -15,8 +16,8 @@ namespace FluentScheduler.Tests.ScheduleTests
 		{
 			var task1 = new Mock<ITask>();
 			var task2 = new Mock<ITask>();
-			task1.Setup(m => m.Execute());
-			task2.Setup(m => m.Execute());
+			task1.Setup(m => m.Execute()).Returns(Task.FromResult(false));
+			task2.Setup(m => m.Execute()).Returns(Task.FromResult(false));
 			var schedule = new Schedule(task1.Object).AndThen(task2.Object);
 			schedule.Execute();
 
@@ -25,7 +26,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 				Thread.Sleep(1);
 			}
 			task1.Verify(m => m.Execute(), Times.Once());
-			task2.Verify(m => m.Execute(), Times.Once());
+            task2.Verify(m => m.Execute(), Times.Once());
 		}
 
 		[Test]
@@ -33,9 +34,9 @@ namespace FluentScheduler.Tests.ScheduleTests
 		{
 			var task1 = new Mock<ITask>();
 			var task2 = new Mock<ITask>();
-			task1.Setup(m => m.Execute());
-			task2.Setup(m => m.Execute());
-			var schedule = new Schedule(() => task1.Object.Execute()).AndThen(() => task2.Object.Execute());
+            task1.Setup(m => m.Execute()).Returns(Task.FromResult(false));
+            task2.Setup(m => m.Execute()).Returns(Task.FromResult(false));
+            var schedule = new Schedule(() => task1.Object.Execute()).AndThen(() => task2.Object.Execute());
 			schedule.Execute();
 
 			while (TaskManager.RunningSchedules.Any())
@@ -54,12 +55,12 @@ namespace FluentScheduler.Tests.ScheduleTests
 			var task2 = new Mock<ITask>();
 			var task1Runtime = DateTime.MinValue;
 			var task2Runtime = DateTime.MinValue;
-			task1.Setup(m => m.Execute()).Callback(() =>
+            task1.Setup(m => m.Execute()).Returns(Task.FromResult(false)).Callback(() =>
 				{
 					task1Runtime = DateTime.Now;
 					Thread.Sleep(1);
 				});
-			task2.Setup(m => m.Execute()).Callback(() => task2Runtime = DateTime.Now);
+            task2.Setup(m => m.Execute()).Returns(Task.FromResult(false)).Callback(() => task2Runtime = DateTime.Now);
 			var schedule = new Schedule(() => task1.Object.Execute()).AndThen(() => task2.Object.Execute());
 			schedule.Execute();
 

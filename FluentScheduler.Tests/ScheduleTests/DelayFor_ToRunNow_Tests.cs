@@ -11,7 +11,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Seconds()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Seconds").ToRunOnceAt(DateTime.Now).DelayFor(2).Seconds());
+			TaskManager.AddTask(async() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Seconds").ToRunOnceAt(DateTime.Now).DelayFor(2).Seconds());
 			DateTime expectedTime = DateTime.Now.AddSeconds(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Seconds").NextRunTime;
@@ -21,7 +21,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Minutes()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Minutes").ToRunOnceAt(DateTime.Now).DelayFor(2).Minutes());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Minutes").ToRunOnceAt(DateTime.Now).DelayFor(2).Minutes());
 			DateTime expectedTime = DateTime.Now.AddMinutes(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Minutes").NextRunTime;
@@ -31,7 +31,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Hours()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Hours").ToRunOnceAt(DateTime.Now).DelayFor(2).Hours());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Hours").ToRunOnceAt(DateTime.Now).DelayFor(2).Hours());
 			DateTime expectedTime = DateTime.Now.AddHours(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Hours").NextRunTime;
@@ -41,7 +41,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Days()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Days").ToRunOnceAt(DateTime.Now).DelayFor(2).Days());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Days").ToRunOnceAt(DateTime.Now).DelayFor(2).Days());
 			DateTime expectedTime = DateTime.Now.AddDays(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Days").NextRunTime;
@@ -51,7 +51,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Weeks()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Weeks").ToRunOnceAt(DateTime.Now).DelayFor(2).Weeks());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Weeks").ToRunOnceAt(DateTime.Now).DelayFor(2).Weeks());
 			DateTime expectedTime = DateTime.Now.AddDays(14);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Weeks").NextRunTime;
@@ -61,7 +61,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Months()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Months").ToRunOnceAt(DateTime.Now).DelayFor(2).Months());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Months").ToRunOnceAt(DateTime.Now).DelayFor(2).Months());
 			DateTime expectedTime = DateTime.Now.AddMonths(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Months").NextRunTime;
@@ -71,7 +71,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		[Test]
 		public void Should_Delay_ToRunOnceAt_For_2_Years()
 		{
-			TaskManager.AddTask(() => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Years").ToRunOnceAt(DateTime.Now).DelayFor(2).Years());
+            TaskManager.AddTask(async () => { }, x => x.WithName("Should_Delay_ToRunOnceAt_For_2_Years").ToRunOnceAt(DateTime.Now).DelayFor(2).Years());
 			DateTime expectedTime = DateTime.Now.AddYears(2);
 
 			DateTime actualTime = TaskManager.GetSchedule("Should_Delay_ToRunOnceAt_For_2_Years").NextRunTime;

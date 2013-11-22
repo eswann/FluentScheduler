@@ -43,12 +43,12 @@ namespace ConsoleTester
 		{
 			Console.WriteLine("Testing DelayFor...");
 
-			TaskManager.AddTask(() => Console.WriteLine("ToRunNow() - not delayed: " + DateTime.Now), x => x.ToRunNow());
-			TaskManager.AddTask(() => Console.WriteLine("ToRunNow() - delayed 2 sec: " + DateTime.Now), x => x.ToRunNow().DelayFor(2).Seconds());
-			TaskManager.AddTask(() => Console.WriteLine("ToRunOnceAt() - not delayed: " + DateTime.Now), x => x.ToRunOnceAt(DateTime.Now));
-			TaskManager.AddTask(() => Console.WriteLine("ToRunOnceAt() - delayed 2 sec: " + DateTime.Now), x => x.ToRunOnceAt(DateTime.Now).DelayFor(2).Seconds());
-			TaskManager.AddTask(() => Console.WriteLine("ToRunEvery() - not delayed: " + DateTime.Now), x => x.ToRunEvery(2).Seconds());
-			TaskManager.AddTask(() => Console.WriteLine("ToRunEvery() - delayed 2 sec: " + DateTime.Now), x => x.ToRunEvery(2).Seconds().DelayFor(2).Seconds());
+			TaskManager.AddTask(async () => Console.WriteLine("ToRunNow() - not delayed: " + DateTime.Now), x => x.ToRunNow());
+            TaskManager.AddTask(async () => Console.WriteLine("ToRunNow() - delayed 2 sec: " + DateTime.Now), x => x.ToRunNow().DelayFor(2).Seconds());
+            TaskManager.AddTask(async () => Console.WriteLine("ToRunOnceAt() - not delayed: " + DateTime.Now), x => x.ToRunOnceAt(DateTime.Now));
+            TaskManager.AddTask(async () => Console.WriteLine("ToRunOnceAt() - delayed 2 sec: " + DateTime.Now), x => x.ToRunOnceAt(DateTime.Now).DelayFor(2).Seconds());
+            TaskManager.AddTask(async () => Console.WriteLine("ToRunEvery() - not delayed: " + DateTime.Now), x => x.ToRunEvery(2).Seconds());
+            TaskManager.AddTask(async () => Console.WriteLine("ToRunEvery() - delayed 2 sec: " + DateTime.Now), x => x.ToRunEvery(2).Seconds().DelayFor(2).Seconds());
 
 
 			//TaskManager.AddTask(() => Console.WriteLine("recurring, not delayed: " + DateTime.Now), x => x.ToRunNow().DelayFor(3).Seconds());
@@ -145,24 +145,24 @@ namespace ConsoleTester
 			Schedule<MyTask>().ToRunOnceIn(5).Seconds();
 
 			// Chaining tasks example
-			Schedule(() =>
+            Schedule(async () =>
 			{
 				Console.WriteLine("First task will fire first!");
 				Console.WriteLine("Waiting four seconds...");
 				Thread.Sleep(4000);
-			}).AndThen(() =>
+			}).AndThen(async() =>
 			{
 				Console.WriteLine("Then the second task fires!");
 			}).WithName("Multitask").ToRunNow();
 
-			Schedule(() =>
+            Schedule(async () =>
 			{
 				Console.WriteLine();
 				Console.WriteLine("... removable task output ...");
 				Console.WriteLine();
 			}).WithName("removable task").ToRunNow().AndEvery(2).Seconds();
 
-			Schedule(() =>
+            Schedule(async () =>
 			{
 				Console.WriteLine();
 				Console.WriteLine("Before sleep - " + DateTime.Now);
@@ -176,14 +176,14 @@ namespace ConsoleTester
 
 	public class MyTask : ITask
 	{
-		public void Execute()
+        public async Task Execute()
 		{
 			Console.WriteLine("ITask Task: " + DateTime.Now);
 		}
 	}
 	public class MyInlineTask : ITask
 	{
-		public void Execute()
+		public async Task Execute()
 		{
 			Console.WriteLine("ITask Inline Task: " + DateTime.Now);
 		}

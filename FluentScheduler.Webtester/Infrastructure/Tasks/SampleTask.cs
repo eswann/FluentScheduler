@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 
 namespace FluentScheduler.WebTester.Infrastructure.Tasks
@@ -14,7 +15,7 @@ namespace FluentScheduler.WebTester.Infrastructure.Tasks
 			HostingEnvironment.RegisterObject(this);
 		}
 
-		public void Execute()
+		public async Task Execute()
 		{
 			lock (_lock)
 			{

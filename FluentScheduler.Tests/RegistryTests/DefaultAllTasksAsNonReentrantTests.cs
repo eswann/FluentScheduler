@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace FluentScheduler.Tests.RegistryTests
@@ -19,7 +20,7 @@ namespace FluentScheduler.Tests.RegistryTests
 		{
 			public RegistryWithPreviousTasksConfigured()
 			{
-				Schedule(() => Console.WriteLine("Hi"));
+				Schedule(async() => Console.WriteLine("Hi"));
 				Schedule<StronglyTypedTestTask>();
 				DefaultAllTasksAsNonReentrant();
 			}
@@ -40,13 +41,13 @@ namespace FluentScheduler.Tests.RegistryTests
 			public RegistryWithFutureTasksConfigured()
 			{
 				DefaultAllTasksAsNonReentrant();
-				Schedule(() => Console.WriteLine("Hi"));
+				Schedule(async() => Console.WriteLine("Hi"));
 				Schedule<StronglyTypedTestTask>();
 			}
 		}
 		private abstract class StronglyTypedTestTask : ITask
 		{
-			public void Execute()
+			public async Task Execute()
 			{
 				 Console.WriteLine("Hi");
 			}

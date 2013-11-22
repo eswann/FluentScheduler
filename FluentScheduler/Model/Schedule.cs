@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FluentScheduler.Model
 {
@@ -8,7 +9,7 @@ namespace FluentScheduler.Model
 		public DateTime NextRunTime { get; set; }
 		public string Name { get; set; }
 
-		internal List<Action> Tasks { get; private set; }
+		internal List<Func<Task>> Tasks { get; private set; }
 
 		internal Func<DateTime, DateTime> CalculateNextRun { get; set; }
 
@@ -36,9 +37,9 @@ namespace FluentScheduler.Model
 		/// Schedules the specified task to run
 		/// </summary>
 		/// <param name="action">A parameterless method to run</param>
-		public Schedule(Action action)
+		public Schedule(Func<Task> action)
 		{
-			Tasks = new List<Action> { action };
+            Tasks = new List<Func<Task>> { action };
 			AdditionalSchedules = new List<Schedule>();
 			TaskExecutions = -1;
 			Reentrant = true;
@@ -48,7 +49,7 @@ namespace FluentScheduler.Model
 		/// Schedules the specified task to run
 		/// </summary>
 		/// <param name="actions">A list of parameterless methods to run</param>
-		public Schedule(List<Action> actions)
+        public Schedule(List<Func<Task>> actions)
 		{
 			Tasks = actions;
 			AdditionalSchedules = new List<Schedule>();
@@ -82,7 +83,7 @@ namespace FluentScheduler.Model
 		/// Schedules another task to be run with this schedule
 		/// </summary>
 		/// <param name="action">A parameterless method to run</param>
-		public Schedule AndThen(Action action)
+        public Schedule AndThen(Func<Task> action)
 		{
 			Tasks.Add(action);
 			return this;

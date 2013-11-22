@@ -21,7 +21,7 @@ namespace FluentScheduler
 
 		private static List<Schedule> _tasks;
 		private static Timer _timer;
-		private static readonly ConcurrentDictionary<List<Action>, bool> RunningNonReentrantTasks = new ConcurrentDictionary<List<Action>, bool>();
+		private static readonly ConcurrentDictionary<List<Func<Task>>, bool> RunningNonReentrantTasks = new ConcurrentDictionary<List<Func<Task>>, bool>();
 		private static readonly ConcurrentDictionary<Guid, Schedule> _runningSchedules = new ConcurrentDictionary<Guid, Schedule>();
 		/// <summary>
 		/// Gets a list of currently schedules currently executing.
@@ -229,8 +229,8 @@ namespace FluentScheduler
 					stopwatch.Start();
 					foreach (var action in schedule.Tasks)
 					{
-						var subTask = Task.Factory.StartNew(action);
-						subTask.Wait();
+					    var subTask = Task.Run(action);
+					    subTask.Wait();
 					}
 				}
 				finally
@@ -265,7 +265,7 @@ namespace FluentScheduler
 		/// </summary>
 		/// <param name="taskAction">Task to schedule</param>
 		/// <param name="taskSchedule">Schedule for the task</param>
-		public static void AddTask(Action taskAction, Action<Schedule> taskSchedule)
+		public static void AddTask(Func<Task> taskAction, Action<Schedule> taskSchedule)
 		{
 			if (taskSchedule == null)
 				throw new ArgumentNullException("taskSchedule", "Please specify the task schedule to add to the task manager.");

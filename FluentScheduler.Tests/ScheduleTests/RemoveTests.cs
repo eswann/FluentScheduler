@@ -29,7 +29,7 @@ namespace FluentScheduler.Tests.ScheduleTests
 		public void Should_Remove_LongRunning_Task_But_Keep_Running()
 		{
 			var name = "longrunning";
-			var schedule = new Schedule(() => { Thread.Sleep(100); });
+			var schedule = new Schedule(async () => { Thread.Sleep(100); });
 			schedule.WithName(name).ToRunNow().AndEvery(2).Seconds();
 			schedule.Execute();
 

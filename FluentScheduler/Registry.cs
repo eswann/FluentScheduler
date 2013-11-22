@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentScheduler.Model;
 
 namespace FluentScheduler
@@ -64,7 +65,7 @@ namespace FluentScheduler
 		/// </summary>
 		/// <param name="action">Task to schedule</param>
 		/// <returns></returns>
-		public Schedule Schedule(Action action)
+		public Schedule Schedule(Func<Task> action)
 		{
 			var schedule = new Schedule(action);
 			if (AllTasksConfiguredAsNonReentrant)
