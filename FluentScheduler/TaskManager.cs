@@ -52,17 +52,14 @@ namespace FluentScheduler
 		/// <returns>Schedule instance or null if the schedule does not exist</returns>
 		public static Schedule GetSchedule(string name)
 		{
-			if (_tasks != null)
+		    if (_tasks != null)
 			{
 				return _tasks.FirstOrDefault(x => x.Name == name);
 			}
-			else
-			{
-				return null;
-			}
+		    return null;
 		}
 
-		static TaskManager()
+	    static TaskManager()
 		{
 			TaskFactory = new TaskFactory();
 		}
@@ -177,7 +174,6 @@ namespace FluentScheduler
 						{
 							// run immediately
 							immediatelyInvokedSchedules.Add(childSchedule);
-							continue;
 						}
 					}
 					else
@@ -227,10 +223,10 @@ namespace FluentScheduler
 				try
 				{
 					stopwatch.Start();
+                    //Don't use Task.WhenAll b/c this is for running subtasks in the specified order
 					foreach (var action in schedule.Tasks)
 					{
-					    var subTask = Task.Run(action);
-					    await subTask;
+					    await action();
 					}
 				}
 				finally
